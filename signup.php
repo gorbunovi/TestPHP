@@ -1,16 +1,17 @@
 <?php
+$salt = 'RANDMO1231KJKLJ';
 session_start();
 include './db.php'; 
 if(isset($_POST['submit'])){
 	$username = trim($_POST['username']);
-	$password1 = trim($_POST['password1']);
-	$password2 = trim($_POST['password2']);
+	$password1 = trim(crypt($_POST['password1'],$salt));
+	$password2 = trim(crypt($_POST['password2'],$salt));
         
 	if(!empty($username) && !empty($password1) && !empty($password2) && ($password1 == $password2)) {
 		$query = $db->query("SELECT * FROM `users` WHERE username =" . $db->quote($username));
 		$data =$query->fetch(PDO::FETCH_ASSOC);
                     if(empty($data)) {
-                       $query = $db->query("INSERT INTO `users` (username, password) VALUES (" . $db->quote($username) . ", SHA(" . $db->quote($password1) . "))");
+                       $query = $db->query("INSERT INTO `users` (username, password) VALUES (" . $db->quote($username) . ", (" . $db->quote($password1) . "))");
                        $_SESSION['mesage']='Всё готово, можете авторизоваться';
                        $home_url = 'http://' . $_SERVER['HTTP_HOST'];
                         header('Location: ' . $home_url);

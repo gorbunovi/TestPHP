@@ -10,10 +10,10 @@ include './db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_SESSION['logged_user_id'])) {
     $user_username = trim($_POST['username']);
-    $user_password = trim($_POST['password']);
+    $user_password = trim(crypt($_POST['password'],$salt));
 
     if (!empty($user_username) && !empty($user_password)) {
-        $query = $db->query("SELECT `user_id` , `username` FROM `users` WHERE username = " . $db->quote($user_username) . " AND password = SHA(" . $db->quote($user_password) . ")");
+        $query = $db->query("SELECT `user_id` , `username` FROM `users` WHERE username = " . $db->quote($user_username) . " AND password = (" . $db->quote($user_password) . ")");
         $user_data = $row = $query->fetch(PDO::FETCH_ASSOC);
 
         if (!empty($row)) {
