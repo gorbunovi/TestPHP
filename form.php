@@ -7,7 +7,8 @@
         <?php
             if (empty($_SESSION['logged_user_id'])) {
         ?>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
+                <?php// var_dump($_SERVER); ?>
                 <div class="grid-x">
                     <div class="small-12 cell">
                         <label>Вход
@@ -32,7 +33,7 @@
         } else {
             ?>
         <div>
-                <a class="text-center">Привет <?php echo $user_data['username']; ?></a>
+                <a class="text-center">Привет <?php echo $this->user_data['username']; ?></a>
                 <br/>
                 <a class="button" href="exit.php">Выход</a>
             </div>

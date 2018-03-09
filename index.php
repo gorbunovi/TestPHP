@@ -1,42 +1,39 @@
 <?php
 
-$user_data = array();
+require 'vendor/autoload.php';
 
-include './authentication.php';
+$klein = new \Klein\Klein();
 
-?>
-<!DOCTYPE html>
+$klein->respond(['POST','GET'], '/', function ($request, $response, $service) {
+    require './authentication.php';
+    $service->user_data = $user_data;
+    $service->render('./newIndex.php');
     
-<html class="no-js" lang="en" dir="ltr">
-    <head>
-        <?php
-            include './head.html';
-        ?>
-    </head>
-    <body>
-        <?php
-            include './topBar.html';
-        ?>
-        <dr/>
-        <br/>
-        <article class="grid-container">
-            <div class="grid-x grid-margin-x">
-                <div class="medium-7 large-9 cell">
-                    <h1>Тестовое задание по PHP</h1>
-                    <br/>
-                    <?php echo $_SESSION['mesage']; ?>
-                    <?php $_SESSION['mesage']=""; ?>
-                </div>    
-                <?php
-                   
-                    include './form.php';
-                ?>
-            </div>
-        </article>
-        
-        <?php
-            include './footer.html';
-        ?>
-        
-    </body>
-</html>
+});
+$klein->respond(['POST', 'GET'], '/index', function ($request, $response, $service) {
+    require './authentication.php';
+    $service->user_data = $user_data;  
+    $service->render('./newIndex.php');
+});
+
+$klein->respond(['POST', 'GET'], '/signup', function ($request, $response, $service) {
+    require './signup2.php';
+    $service->render('./signup.php');
+});
+
+$klein->respond(['POST', 'GET'], '/list1', function ($request, $response, $service) {
+    require './authentication.php';
+    $service->user_data = $user_data;
+    $service->render('./list1.php');
+});
+
+$klein->respond(['POST', 'GET'], '/list2', function ($request, $response, $service) {
+    require './authentication.php';
+    $service->user_data = $user_data;
+    $service->render('./list2.php');
+});
+
+$klein->dispatch();
+
+$user_data = array();
+?>
