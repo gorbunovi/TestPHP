@@ -1,8 +1,11 @@
 <?php
-require_once './vendor/autoload.php';
+
+$username = getenv('nameuser');
+$connection_string = getenv('connection_string');
+$password = getenv('password');
 ORM::configure(array(
-    'connection_string' => 'mysql:host=localhost:3306;dbname=users',
-    'username' => 'root',
-    'password' => ''
+    'connection_string' => $connection_string,
+    'username' => $username,
+    'password' => $password
 ));
 ?>

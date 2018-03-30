@@ -5,10 +5,9 @@
     <div class="callout secondary">
         
         <?php
-            if (empty($_SESSION['logged_user_id'])) {
+            if (empty($this->user_data)) {
         ?>
-        <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
-                <?php// var_dump($_SERVER); ?>
+            <form action="" method="POST">
                 <div class="grid-x">
                     <div class="small-12 cell">
                         <label>Вход
@@ -24,7 +23,7 @@
                         </div>    
                         <div class="button-group">
                             <button class="button" type="submit" value="Submit">Вход</button>
-                            <a class="button" href="signup.php">Регистрация</a>
+                            <a class="button" href="signup">Регистрация</a>
                         </div>
                     </div>
                 </div>
@@ -35,7 +34,7 @@
         <div>
                 <a class="text-center">Привет <?php echo $this->user_data['username']; ?></a>
                 <br/>
-                <a class="button" href="exit.php">Выход</a>
+                <a class="button" href="/exit">Выход</a>
             </div>
             <?php
         }
